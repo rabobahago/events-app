@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-export default function Home({ title }) {
+export default function Home({ data }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,9 +20,16 @@ export default function Home({ title }) {
       </header>
 
       <main className={styles.main}>
-        <a href="/">
+        {data.map((ev) => (
+          <a href={`/events/${ev.id}`}>
+            <Image src={ev.image} alt={ev.title} width={200} height={200} />{" "}
+            <h2>{ev.title}</h2>
+            <p>{ev.description}</p>
+          </a>
+        ))}
+        <a href="/events/london">
           <img />
-          <h2>Events in London {title}</h2>
+          <h2>Events in London</h2>
           <p>
             Lorem Ipsum has been the industry's standard dummy text ever since
             the 1500s, when an unknown printer took a galley of type and
@@ -34,9 +41,9 @@ export default function Home({ title }) {
             PageMaker including versions of Lorem Ipsum
           </p>
         </a>
-        <a href="/">
+        <a href="/events/sanfran">
           <img />
-          <h2>Events in Paris</h2>
+          <h2>Events in San Francisco</h2>
           <p>
             Lorem Ipsum has been the industry's standard dummy text ever since
             the 1500s, when an unknown printer took a galley of type and
@@ -48,7 +55,7 @@ export default function Home({ title }) {
             PageMaker including versions of Lorem Ipsum
           </p>
         </a>
-        <a href="/">
+        <a href="/events/bacerlona">
           <img />
           <h2>Events in Bacerlona</h2>
           <p>
@@ -70,10 +77,11 @@ export default function Home({ title }) {
     </div>
   );
 }
-export function getServerSideProps() {
+export async function getServerSideProps() {
+  const { events_categories } = await import("/data/data.json");
   return {
     props: {
-      title: "Hello Everyone",
+      data: events_categories,
     },
   };
 }
