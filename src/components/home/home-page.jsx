@@ -3,17 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 const HomePage = ({ data }) => {
   return (
-    <main>
+    <div className="home_body">
       {data.map((ev) => (
         <Link legacyBehavior key={ev.id} href={`/events/${ev.id}`} passHref>
-          <a>
-            <Image src={ev.image} alt={ev.title} width={200} height={300} />{" "}
-            <h2>{ev.title}</h2>
-            <p>{ev.description}</p>
+          <a className="card">
+            <div className="image">
+              <Image src={ev.image} alt={ev.title} width={400} height={200} />
+            </div>
+            <div className="content">
+              <h2>{ev.title}</h2>
+              <p>{ev.description}</p>
+            </div>
           </a>
         </Link>
       ))}
-    </main>
+    </div>
   );
 };
 export default HomePage;

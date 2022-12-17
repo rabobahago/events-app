@@ -1,8 +1,5 @@
 import Head from "next/head";
-import Footer from "../src/components/footer/Footer";
-import Header from "../src/components/header/Header";
 import HomePage from "../src/components/home/home-page";
-import styles from "../styles/Home.module.css";
 
 export default function Home({ data }) {
   return (

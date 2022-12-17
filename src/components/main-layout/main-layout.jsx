@@ -3,7 +3,8 @@ import Footer from "../footer/Footer";
 const MainLayout = ({ children }) => (
   <>
     <Header />
-    {children}
+    <main>{children}</main>
+
     <Footer />
   </>
 );
