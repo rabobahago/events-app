@@ -1,13 +1,28 @@
-const EventCatPage = ({ data }) => {
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+const EventCatPage = ({ data, pageName }) => {
+  const firstLetter = pageName.slice(0, 1).toUpperCase();
+  const name = firstLetter.concat(pageName.slice(1));
   return (
     <div>
-      <h1>Events in London</h1>
-      <a href="/events/london/ev">Event 1</a>
-      <a href="/events/event2">Event 2</a>
-      <a href="/events/event3">Event 3</a>
-      <a href="/events/event4">Event 4</a>
-      <a href="/events/event5">Event 5</a>
-      <a href="/events/event6">Event 6</a>
+      <h1>Events in {name}</h1>
+      <div>
+        {data.map((ev) => (
+          <Link
+            legacyBehavior
+            key={ev.id}
+            href={`/events/${ev.city}/${ev.id}`}
+            passHref
+          >
+            <a>
+              <Image src={ev.image} alt={ev.title} width={300} height={300} />
+              <h2>{ev.title}</h2>
+              <p>{ev.description}</p>
+            </a>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
@@ -31,6 +46,6 @@ export async function getStaticProps(context) {
   const { allEvents } = await import("/data/data.json");
   const data = allEvents.filter((ev) => ev.city === id);
   return {
-    props: { data: data },
+    props: { data: data, pageName: id },
   };
 }
